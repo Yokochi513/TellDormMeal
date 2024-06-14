@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from server import server_thread
 
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '../config/.env')
+dotenv_path = os.path.join(os.path.dirname(__file__), '../env/.env')
 load_dotenv(dotenv_path)
 
 intents = discord.Intents.default()
