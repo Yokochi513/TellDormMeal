@@ -20,6 +20,7 @@ Token = os.getenv("BOT_TOKEN")
 @client.event
 async def on_ready():
     TDM.manual_update()
+    everyday_notice.start()
     if TDM.json_already_update():
         await client.change_presence(status = discord.Status.online, activity=discord.Game(name="今週は表示できるぜ"))
     else:
