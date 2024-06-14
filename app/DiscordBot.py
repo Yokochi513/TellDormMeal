@@ -6,6 +6,8 @@ import TellDormMeal as TDM
 import ConnectMongoDB as CMDB
 from discord.ext import tasks
 from dotenv import load_dotenv
+from server import server_thread
+
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '../config/.env')
 load_dotenv(dotenv_path)
@@ -218,5 +220,5 @@ async def everyday_notice():
                 await ch.send(embed=embed)
 
 
-
+server_thread()
 client.run(os.getenv("BOT_TOKEN"))
