@@ -15,4 +15,4 @@ COPY . /bot
 
 EXPOSE 8080
 
-CMD python app/BotDiscordCall.py
+CMD python app/DiscordBot.py
