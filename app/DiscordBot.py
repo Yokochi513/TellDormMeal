@@ -174,7 +174,7 @@ async def on_message(message):
             await message.channel.send(embed=embed)
 
 
-@tasks.loop(seconjds=60)
+@tasks.loop(seconds=60)
 async def everyday_notice():
     now = datetime.datetime.now().strftime("%H:%M")
     day = datetime.date.today().weekday()
