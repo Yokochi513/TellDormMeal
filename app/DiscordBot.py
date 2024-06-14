@@ -221,4 +221,4 @@ async def everyday_notice():
 
 
 server_thread()
-client.run(os.getenv("BOT_TOKEN"))
+client.run(Token)
