@@ -15,7 +15,7 @@ load_dotenv(dotenv_path)
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
-
+Token = os.getenv("BOT_TOKEN")
 
 @client.event
 async def on_ready():

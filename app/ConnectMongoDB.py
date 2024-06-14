@@ -3,10 +3,12 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '../config/.env')
+dotenv_path = os.path.join(os.path.dirname(__file__), '../env/.env')
 load_dotenv(dotenv_path)
 
-Mongo_client = MongoClient(os.getenv("ULI"), tls=True, tlsCertificateKeyFile=os.getenv("tlsCertificateKeyFile_PATH"))
+uli = os.getenv("ULI")
+tlsCertificateKeyFile_path = os.getenv("tlsCertificateKeyFile_PATH")
+Mongo_client = MongoClient(uli, tls=True, tlsCertificateKeyFile=tlsCertificateKeyFile_path)
 db = Mongo_client.TellDormMeal
 data = db.Users
 
