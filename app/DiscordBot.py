@@ -20,6 +20,11 @@ Token = os.getenv("BOT_TOKEN")
 @client.event
 async def on_ready():
     TDM.manual_update()
+    if TDM.json_already_update():
+        await client.change_presence(status = discord.Status.online, activity=discord.Game(name="今週は表示できるぜ"))
+    else:
+        await client.change_presence(status = discord.Status.idle, activity=discord.Game(name="今週は表示できないぜ"))
+
 
 
 @client.event
@@ -102,6 +107,27 @@ async def on_message(message):
             TDM.manual_update()
             await message.channel.send("更新完了")
         
+        if message.content == "!confManualNotice":
+            UserChannels = CMDB.Get_UserID()
+            if TDM.json_already_update():
+                for i in range(len(UserChannels)):
+                    ch = client.get_channel(UserChannels[i])
+
+                    embed = discord.Embed(
+                                title="今日のメニューを表示",
+                                color=0x00ff00,
+                                )
+                    date,breakfast,lunchA,lunchB,dinnerA,dinnerB = TDM.today()
+                    embed.add_field(name="date", value=date, inline=False)
+                    embed.add_field(name="breakfast", value=breakfast, inline=False)
+                    embed.add_field(name="lunchA", value=lunchA, inline=False)
+                    embed.add_field(name="lunchB", value=lunchB, inline=False)
+                    embed.add_field(name="dinnerA", value=dinnerA, inline=False)
+                    embed.add_field(name="dinnerB", value=dinnerB, inline=False)
+                    await ch.send(embed=embed)
+            else:
+                await message.channel.send("無理でした")
+        
         if message.content.startswith("!confGetChannel"):
             DevChannels = CMDB.Get_UserID(True)
             for i in range(len(DevChannels)):
@@ -148,7 +174,7 @@ async def on_message(message):
             await message.channel.send(embed=embed)
 
 
-@tasks.loop(seconds=60)
+@tasks.loop(seconjds=60)
 async def everyday_notice():
     now = datetime.datetime.now().strftime("%H:%M")
     day = datetime.date.today().weekday()
