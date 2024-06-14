@@ -8,7 +8,7 @@ load_dotenv(dotenv_path)
 
 uli = os.getenv("ULI")
 tlsCertificateKeyFile_path = os.getenv("tlsCertificateKeyFile_PATH")
-Mongo_client = MongoClient(uli, tls=True, tlsCertificateKeyFile=tlsCertificateKeyFile_path)
+Mongo_client = MongoClient(uli, tls=True, tlsCertificateKeyFile="./config/X509-cert-5865884892705360989.pem")
 db = Mongo_client.TellDormMeal
 data = db.Users
 
