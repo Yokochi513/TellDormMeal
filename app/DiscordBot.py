@@ -108,7 +108,17 @@ async def on_message(message):
                             color=0x00ff00,
                             )
             for i in range(7):
-                date,breakfast,lunchA,lunchB,dinnerA,dinnerB = TDM.read_json(i)
+                date,breakfast,lunchA,lunchB,dinnerA,dinnerB = TDM.read_Nowjson(i)
+                embed.add_field(name="date", value=date, inline=False)
+                embed.add_field(name="breakfast", value=breakfast, inline=False)
+                embed.add_field(name="lunchA", value=lunchA, inline=False)
+                embed.add_field(name="lunchB", value=lunchB, inline=False)
+                embed.add_field(name="dinnerA", value=dinnerA, inline=False)
+                embed.add_field(name="dinnerB", value=dinnerB, inline=False)
+                await message.channel.send(embed=embed)
+                embed.clear_fields()
+            for i in range(7):
+                date,breakfast,lunchA,lunchB,dinnerA,dinnerB = TDM.read_Nextjson(i)
                 embed.add_field(name="date", value=date, inline=False)
                 embed.add_field(name="breakfast", value=breakfast, inline=False)
                 embed.add_field(name="lunchA", value=lunchA, inline=False)
