@@ -192,7 +192,7 @@ async def everyday_notice():
 
     if day == 0 and now == "00:00":
         DevChannels = CMDB.Get_UserID(True)
-        if TDM.get_MealData():
+        if TDM.get_NowMealData():
             TDM.make_json()
             for i in range(len(DevChannels)):
                 ch = client.get_channel(DevChannels[i])
