@@ -21,7 +21,7 @@ Token = os.getenv("BOT_TOKEN")
 async def on_ready():
     TDM.manual_update()
     everyday_notice.start()
-    if TDM.json_already_update():
+    if TDM.json_nowWeek_already_update():
         await client.change_presence(status = discord.Status.online, activity=discord.Game(name="今週は表示できるぜ"))
     else:
         await client.change_presence(status = discord.Status.idle, activity=discord.Game(name="今週は表示できないぜ"))
@@ -45,7 +45,7 @@ async def on_message(message):
         return
     else:
         if message.content.startswith("/today"):
-            if TDM.json_already_update():
+            if TDM.json_nowWeek_already_update():
                 embed = discord.Embed(
                             title="今日のメニューを表示",
                             color=0x00ff00,
@@ -67,7 +67,21 @@ async def on_message(message):
                 await message.channel.send(embed=embed)
             
         if message.content.startswith("/tomorrow"):
-            if TDM.json_already_update():
+            weekday = datetime.date.today().weekday()
+            if TDM.json_nowWeek_already_update() and weekday != 6:
+                embed = discord.Embed(
+                        title="明日のメニューを表示",
+                        color=0x00ff00,
+                        )
+                date,breakfast,lunchA,lunchB,dinnerA,dinnerB = TDM.tomorrow()
+                embed.add_field(name="date", value=date, inline=False)
+                embed.add_field(name="breakfast", value=breakfast, inline=False)
+                embed.add_field(name="lunchA", value=lunchA, inline=False)
+                embed.add_field(name="lunchB", value=lunchB, inline=False)
+                embed.add_field(name="dinnerA", value=dinnerA, inline=False)
+                embed.add_field(name="dinnerB", value=dinnerB, inline=False)
+                await message.channel.send(embed=embed)
+            elif TDM.json_nextWeek_already_update() and weekday == 6:
                 embed = discord.Embed(
                         title="明日のメニューを表示",
                         color=0x00ff00,
@@ -110,7 +124,7 @@ async def on_message(message):
         
         if message.content == "!confManualNotice":
             UserChannels = CMDB.Get_UserID()
-            if TDM.json_already_update():
+            if TDM.json_nowWeek_already_update():
                 for i in range(len(UserChannels)):
                     ch = client.get_channel(UserChannels[i])
 
@@ -193,7 +207,7 @@ async def everyday_notice():
     if day == 0 and now == "00:00":
         DevChannels = CMDB.Get_UserID(True)
         if TDM.get_NowMealData():
-            TDM.make_json()
+            TDM.make_Nowjson()
             for i in range(len(DevChannels)):
                 ch = client.get_channel(DevChannels[i])
                 await ch.send("今週分を獲得しました。")
@@ -220,7 +234,7 @@ async def everyday_notice():
     
     elif now == "00:00":
         UserChannels = CMDB.Get_UserID()
-        if TDM.json_already_update():
+        if TDM.json_nowWeek_already_update():
             for i in range(len(UserChannels)):
                 ch = client.get_channel(UserChannels[i])
 
