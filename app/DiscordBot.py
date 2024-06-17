@@ -44,7 +44,7 @@ async def on_message(message):
     if message.author == client.user:
         return
     else:
-        if message.content == "/today":
+        if message.content.startswith("/today"):
             if TDM.json_already_update():
                 embed = discord.Embed(
                             title="今日のメニューを表示",
@@ -66,7 +66,7 @@ async def on_message(message):
                 )
                 await message.channel.send(embed=embed)
             
-        if message.content == "/tomorrow":
+        if message.content.startswith("/tomorrow"):
             if TDM.json_already_update():
                 embed = discord.Embed(
                         title="明日のメニューを表示",
@@ -88,7 +88,7 @@ async def on_message(message):
                 )
                 await message.channel.send(embed=embed)
         
-        if message.content.startswith("!confMenuAll"):
+        if message.content == "!confMenuAll":
             embed = discord.Embed(
                             title="一週間のメニューを表示",
                             color=0x00ff00,
@@ -104,7 +104,7 @@ async def on_message(message):
                 await message.channel.send(embed=embed)
                 embed.clear_fields()
         
-        if message.content.startswith("!confUpdate"):
+        if message.content == "!confUpdate":
             TDM.manual_update()
             await message.channel.send("更新完了")
         
@@ -129,7 +129,7 @@ async def on_message(message):
             else:
                 await message.channel.send("無理でした")
         
-        if message.content.startswith("!confGetChannel"):
+        if message.content == "!confGetChannel":
             DevChannels = CMDB.Get_UserID(True)
             for i in range(len(DevChannels)):
                 if DevChannels[i] == message.channel.id:
@@ -149,7 +149,7 @@ async def on_message(message):
             else:
                 await message.channel.send("追加済みです。")
         
-        if message.content == "!confDelChannel":
+        if message.content.startswith("!confDelChannel"):
             chID = message.channel.id
             isDelete = CMDB.Del_user(chID)
             if isDelete:
