@@ -235,11 +235,20 @@ def json_nextWeek_already_update():
         return False
 
 
-def manual_update():
-    get_NowMealData()
-    make_Nowjson()
-    get_NextMealData()
-    make_Nextjson()
+def NowManual_update():
+    if get_NowMealData():
+        make_Nowjson()
+        return True
+    else:
+        return False
+
+
+def NextManual_update():
+    if get_NextMealData():
+        make_Nextjson()
+        return True
+    else:
+        return False
 
 
 def today():

@@ -129,9 +129,16 @@ async def on_message(message):
                 embed.clear_fields()
         
         if message.content == "!confUpdate":
-            TDM.manual_update()
-            await message.channel.send("更新完了")
-        
+            if TDM.NowManual_update():
+                await message.channel.send("今週のメニュー更新完了")
+            else:
+                await message.channel.send("今週のメニューはまだ上がってないようです")
+            
+            if TDM.NextManual_update():
+                await message.channel.send("来週のメニュー更新完了")
+            else:
+                await message.channel.send("来週のメニューはまだ上がってないようです")
+
         if message.content == "!confManualNotice":
             UserChannels = CMDB.Get_UserID()
             if TDM.json_nowWeek_already_update():
