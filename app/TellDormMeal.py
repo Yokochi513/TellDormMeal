@@ -260,7 +260,7 @@ def today():
 def tomorrow():
     tomorrow = datetime.date.today() + relativedelta(days=1)
     tomorrowWeekday = tomorrow.weekday()
-    if tomorrowWeekday == 6:
+    if tomorrowWeekday == 0:
         date,breakfast,lunchA,lunchB,dinnerA,dinnerB = read_Nextjson(weekday= tomorrowWeekday)
     else:
         date,breakfast,lunchA,lunchB,dinnerA,dinnerB = read_Nowjson(weekday= tomorrowWeekday)
