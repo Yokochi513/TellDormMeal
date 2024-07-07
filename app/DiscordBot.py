@@ -230,6 +230,15 @@ async def everyday_notice():
                 ch = client.get_channel(DevChannels[i])
                 await ch.send("今週分を獲得しました。")
                 await client.change_presence(status = discord.Status.online, activity=discord.Game(name="今週は表示できるぜ"))
+                if TDM.get_NextMealData():
+                    TDM.make_Nextjson()
+                    for i in range(len(DevChannels)):
+                        ch = client.get_channel(DevChannels[i])
+                        await ch.send("来週分を獲得しました。")
+                else:
+                    for i in range(len(DevChannels)):
+                        ch = client.get_channel(DevChannels[i])
+                        await ch.send("来週分を獲得できませんでした。")
             UserChannels = CMDB.Get_UserID()
             for i in range(len(UserChannels)):
                 ch = client.get_channel(UserChannels[i])
