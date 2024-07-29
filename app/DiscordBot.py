@@ -132,8 +132,12 @@ async def on_message(message):
         if message.content == "!confUpdate":
             if TDM.NowManual_update():
                 await message.channel.send("今週のメニュー更新完了")
+                await client.change_presence(status = discord.Status.online, activity=discord.Game(name="今週は表示できるぜ"))
+
             else:
                 await message.channel.send("今週のメニューはまだ上がってないようです")
+                await client.change_presence(status = discord.Status.idle, activity=discord.Game(name="今週は表示できないぜ"))
+
             
             if TDM.NextManual_update():
                 await message.channel.send("来週のメニュー更新完了")
