@@ -15,7 +15,7 @@ def get_NowMealData():
     monday = (date + relativedelta(days=-weekday)).strftime("%Y/%m%d")
     Year,MonthDay = monday.split("/")
 
-    pdf_url = "https://www.tsuyama-ct.ac.jp/images/hokushinryou/menu/ryoumenu-R06" + MonthDay + ".pdf"
+    pdf_url = "https://www.tsuyama-ct.ac.jp/images/hokushinryou/menu/ryoumenu-R07" + MonthDay + ".pdf"
     
     res = requests.get(pdf_url, allow_redirects=True, verify=False)
 
